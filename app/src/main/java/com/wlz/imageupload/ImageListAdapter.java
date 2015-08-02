@@ -39,11 +39,20 @@ public class ImageListAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(final int i, View view, ViewGroup viewGroup) {
             LayoutInflater inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.image_listview_item,viewGroup,false);
             ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
             Glide.with(ctx).load(arrayList.get(i).path).centerCrop().into(imageView);
+            ImageView cancel = (ImageView) view.findViewById(R.id.imageView2);
+            Glide.with(ctx).load(R.drawable.ic_action_cancel).into(cancel);
+            cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    arrayList.remove(i);
+                    notifyDataSetChanged();
+                }
+            });
         return view;
     }
 }
